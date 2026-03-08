@@ -1,7 +1,6 @@
 use alloy_primitives::{Address, Bytes};
 use alloy_provider::Provider;
 use alloy_sol_types::{SolCall, SolInterface};
-use alloy_transport::DualTransportHandler;
 use async_trait::async_trait;
 
 use bunzo_types::gas::GasFees;

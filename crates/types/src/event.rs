@@ -9,10 +9,7 @@ pub enum PoolEvent {
         nonce: U256,
     },
     /// A user operation was removed from the pool (mined, replaced, or evicted)
-    OpRemoved {
-        hash: B256,
-        reason: OpRemovalReason,
-    },
+    OpRemoved { hash: B256, reason: OpRemovalReason },
     /// The pool was cleared
     Cleared,
 }
@@ -33,15 +30,11 @@ pub enum OpRemovalReason {
     Dropped,
 }
 
-
 /// Events emitted by the builder/bundler
 #[derive(Debug, Clone)]
 pub enum BuilderEvent {
     /// A bundle was proposed
-    BundleProposed {
-        ops_count: usize,
-        gas_estimate: u64,
-    },
+    BundleProposed { ops_count: usize, gas_estimate: u64 },
     /// A bundle transaction was submitted
     BundleSubmitted {
         tx_hash: B256,
@@ -55,10 +48,7 @@ pub enum BuilderEvent {
         gas_used: u64,
     },
     /// A bundle transaction was dropped or replaced
-    BundleDropped {
-        tx_hash: B256,
-        reason: String,
-    },
+    BundleDropped { tx_hash: B256, reason: String },
     /// Fee escalation was triggered for a pending bundle
     FeeEscalated {
         old_tx_hash: B256,
@@ -90,7 +80,7 @@ pub struct EventBus<T> {
     sender: tokio::sync::broadcast::Sender<T>,
 }
 
-impl <T: Clone + Send + 'static> EventBus<T> {
+impl<T: Clone + Send + 'static> EventBus<T> {
     /// Create a new event bus with the given channel capacity
     pub fn new(capacity: usize) -> Self {
         let (sender, _) = tokio::sync::broadcast::channel(capacity);
@@ -105,13 +95,13 @@ impl <T: Clone + Send + 'static> EventBus<T> {
         self.sender.send(event).unwrap_or(0)
     }
 
-     /// Subscribe to events on this bus
+    /// Subscribe to events on this bus
     pub fn subscribe(&self) -> tokio::sync::broadcast::Receiver<T> {
         self.sender.subscribe()
     }
 }
 
-impl <T: Clone + Send + 'static> Default for EventBus<T> {
+impl<T: Clone + Send + 'static> Default for EventBus<T> {
     fn default() -> Self {
         Self::new(256)
     }

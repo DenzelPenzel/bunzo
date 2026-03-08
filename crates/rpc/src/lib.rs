@@ -1,5 +1,5 @@
-pub mod eth;
 pub mod error;
+pub mod eth;
 pub mod server;
 
 pub use error::RpcError;

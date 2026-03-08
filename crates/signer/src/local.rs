@@ -1,6 +1,5 @@
 use alloy_consensus::{SignableTransaction, TxEip1559};
 use alloy_eips::eip2718::Encodable2718;
-use alloy_network::TransactionBuilder;
 use alloy_primitives::{Address, Bytes, TxKind, U256};
 use alloy_rpc_types_eth::TransactionRequest;
 use alloy_signer::SignerSync;

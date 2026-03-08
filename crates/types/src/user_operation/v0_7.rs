@@ -1,4 +1,4 @@
-use alloy_primitives::{Address, Bytes, FixedBytes, B256, U256};
+use alloy_primitives::{Address, B256, Bytes, FixedBytes, U256};
 use alloy_sol_types::SolValue;
 use serde::{Deserialize, Serialize};
 
@@ -59,6 +59,7 @@ pub struct UserOperation {
 
 impl UserOperation {
     /// Create a new user operation and compute its hash.
+    #[allow(clippy::too_many_arguments)]
     pub fn new(
         sender: Address,
         nonce: U256,
@@ -141,13 +142,8 @@ impl UserOperation {
     }
 
     /// Unpack a `PackedUserOperation` into an off-chain `UserOperation`.
-    pub fn unpack(
-        packed: &PackedUserOperation,
-        entry_point: Address,
-        chain_id: u64,
-    ) -> Self {
-        let (verification_gas_limit, call_gas_limit) =
-            unpack_u128_pair(&packed.accountGasLimits.0);
+    pub fn unpack(packed: &PackedUserOperation, entry_point: Address, chain_id: u64) -> Self {
+        let (verification_gas_limit, call_gas_limit) = unpack_u128_pair(&packed.accountGasLimits.0);
         let (max_priority_fee_per_gas, max_fee_per_gas) = unpack_u128_pair(&packed.gasFees.0);
 
         let (factory, factory_data) = if packed.initCode.len() >= 20 {
@@ -384,7 +380,10 @@ fn unpack_u128_pair(bytes: &[u8; 32]) -> (u128, u128) {
     let mut low_bytes = [0u8; 16];
     high_bytes.copy_from_slice(&bytes[..16]);
     low_bytes.copy_from_slice(&bytes[16..]);
-    (u128::from_be_bytes(high_bytes), u128::from_be_bytes(low_bytes))
+    (
+        u128::from_be_bytes(high_bytes),
+        u128::from_be_bytes(low_bytes),
+    )
 }
 
 #[cfg(test)]
@@ -432,7 +431,10 @@ mod tests {
         assert_eq!(uo.call_gas_limit, unpacked.call_gas_limit);
         assert_eq!(uo.verification_gas_limit, unpacked.verification_gas_limit);
         assert_eq!(uo.max_fee_per_gas, unpacked.max_fee_per_gas);
-        assert_eq!(uo.max_priority_fee_per_gas, unpacked.max_priority_fee_per_gas);
+        assert_eq!(
+            uo.max_priority_fee_per_gas,
+            unpacked.max_priority_fee_per_gas
+        );
         assert_eq!(uo.factory, unpacked.factory);
         assert_eq!(uo.paymaster, unpacked.paymaster);
     }
@@ -471,11 +473,20 @@ mod tests {
             Address::repeat_byte(0x01),
             U256::from(7),
             Bytes::new(),
-            0, 0, 0, 0, 0,
+            0,
+            0,
+            0,
+            0,
+            0,
             Bytes::new(),
-            None, Bytes::new(),
-            None, 0, 0, Bytes::new(),
-            Address::ZERO, 1,
+            None,
+            Bytes::new(),
+            None,
+            0,
+            0,
+            Bytes::new(),
+            Address::ZERO,
+            1,
         );
         let id = uo.id();
         assert_eq!(id.sender, Address::repeat_byte(0x01));

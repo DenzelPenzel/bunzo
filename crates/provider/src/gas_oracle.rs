@@ -16,6 +16,7 @@ pub trait GasOracle: Send + Sync + 'static {
 }
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct BlockFees {
     block_number: u64,
     base_fee: u128,

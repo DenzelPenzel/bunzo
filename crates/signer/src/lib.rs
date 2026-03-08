@@ -7,7 +7,6 @@ pub use manager::{SignerLease, SignerManager};
 use alloy_primitives::{Address, Bytes};
 use alloy_rpc_types_eth::TransactionRequest;
 use async_trait::async_trait;
-use bunzo_types::error::SignerError;
 
 #[async_trait]
 pub trait BundlerSigner: Send + Sync + 'static {

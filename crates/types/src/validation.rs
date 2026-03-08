@@ -51,10 +51,7 @@ impl StakeInfo {
 #[derive(Debug, Clone)]
 pub enum ValidationRevert {
     /// The entry point reverted with a FailedOp error
-    FailedOp {
-        op_index: usize,
-        reason: String,
-    },
+    FailedOp { op_index: usize, reason: String },
     /// The entry point reverted with a FailedOpWithRevert error
     FailedOpWithRevert {
         op_index: usize,
@@ -62,13 +59,10 @@ pub enum ValidationRevert {
         inner: Vec<u8>,
     },
     /// Signature validation failed for aggregator
-    SignatureValidationFailed {
-        aggregator: Address,
-    },
+    SignatureValidationFailed { aggregator: Address },
     /// An unknown revert
     Unknown(Vec<u8>),
 }
-
 
 impl std::fmt::Display for ValidationRevert {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

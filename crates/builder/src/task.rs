@@ -2,8 +2,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use alloy_primitives::Bytes;
-use alloy_sol_types::SolCall;
-use metrics::{counter, histogram};
+use metrics::counter;
 use tracing::{debug, error, info, warn};
 
 use bunzo_pool::OperationPool;
@@ -153,7 +152,7 @@ where
         let bundle = match self.proposer.make_bundle().await {
             Ok(bundle) => bundle,
             Err(ProposerError::NoOperations) => return BundleSenderState::Idle,
-            Err(e) => return BundleSenderState::Idle,
+            Err(_e) => return BundleSenderState::Idle,
         };
 
         if bundle.is_empty() {

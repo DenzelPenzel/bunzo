@@ -9,10 +9,9 @@ pub mod tracker;
 pub use bundle::Bundle;
 pub use conflict::ConflictDetector;
 pub use proposer::{BundleProposer, BundleProposerImpl, ProposerError};
-pub use task::BundlerTask;
 pub use strategy::{ConditionalSubmissionStrategy, DirectSubmissionStrategy, StrategyRouter};
+pub use task::BundlerTask;
 pub use tracker::{EscalationConfig, EscalationStrategy, TransactionTracker};
-
 
 /// Bundle sender FSM states
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

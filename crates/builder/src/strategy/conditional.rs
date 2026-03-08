@@ -2,7 +2,6 @@ use std::sync::Arc;
 
 use alloy_primitives::{B256, Bytes};
 use async_trait::async_trait;
-use tracing::{debug, warn};
 
 use bunzo_provider::traits::EvmProvider;
 
@@ -36,14 +35,14 @@ where
         "conditional"
     }
 
-    async fn submit(&self, raw_tx: Bytes, ctx: &SubmissionContext) -> Result<B256, SubmitError> {
+    async fn submit(&self, _raw_tx: Bytes, _ctx: &SubmissionContext) -> Result<B256, SubmitError> {
         todo!()
     }
 
     async fn cancel(
         &self,
-        tx_hash: B256,
-        cancel_tx: Option<Bytes>,
+        _tx_hash: B256,
+        _cancel_tx: Option<Bytes>,
     ) -> Result<CancelOutcome, SubmitError> {
         todo!()
     }
@@ -57,6 +56,7 @@ impl<P> ConditionalSubmissionStrategy<P>
 where
     P: EvmProvider,
 {
+    #[allow(dead_code)]
     async fn submit_direct(&self, raw_tx: Bytes) -> Result<B256, SubmitError> {
         self.provider
             .send_raw_transaction(raw_tx)

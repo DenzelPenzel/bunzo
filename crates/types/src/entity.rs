@@ -8,7 +8,7 @@ pub enum EntityType {
     Account,
     Paymaster,
     Factory,
-    Aggregator
+    Aggregator,
 }
 
 impl fmt::Display for EntityType {
@@ -84,7 +84,7 @@ pub enum EntityUpdateType {
     /// Entity was involved in an unstaked invalidation
     UnstakedInvalidation,
     /// Entity was involved in a staked invalidation
-    StakedInvalidation
+    StakedInvalidation,
 }
 
 #[derive(Debug, Clone)]
@@ -92,7 +92,3 @@ pub struct EntityUpdate {
     pub entity: Entity,
     pub update_type: EntityUpdateType,
 }
-
-
-
-

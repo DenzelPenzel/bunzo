@@ -111,7 +111,6 @@ impl Default for ConflictDetector {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

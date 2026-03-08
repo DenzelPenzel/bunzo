@@ -148,10 +148,7 @@ impl<P: EvmProvider> TransactionTracker<P> {
             return Ok(Some(TransactionStatus::Mined { block_number }));
         }
 
-        let chain_nonce = self
-            .provider
-            .get_nonce(self.signer_address)
-            .await?;
+        let chain_nonce = self.provider.get_nonce(self.signer_address).await?;
 
         if chain_nonce > pending.nonce {
             warn!(
@@ -202,9 +199,7 @@ impl<P: EvmProvider> TransactionTracker<P> {
                 let new_priority_fee = pending.max_priority_fee_per_gas * multiplier / 10000;
                 Some((new_max_fee, new_priority_fee))
             }
-            EscalationStrategy::NetworkTracking => {
-                self.escalated_fees_network().await
-            }
+            EscalationStrategy::NetworkTracking => self.escalated_fees_network().await,
         }
     }
 

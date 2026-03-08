@@ -1,4 +1,4 @@
-use alloy_primitives::{Address, Bytes, B256, U256};
+use alloy_primitives::{Address, B256, Bytes, U256};
 use alloy_rpc_types_eth::{Block, Filter, Log, TransactionReceipt, TransactionRequest};
 use async_trait::async_trait;
 

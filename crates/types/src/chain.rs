@@ -93,9 +93,9 @@ impl ChainSpec {
             max_ops_per_sender: 4,
             chain_history_size: 128,
             nonce_gap_limit: 20,
-            min_max_priority_fee_per_gas: 100_000_000,       // 0.1 gwei
+            min_max_priority_fee_per_gas: 100_000_000, // 0.1 gwei
             max_max_priority_fee_per_gas: 50_000_000_000_000, // 50k gwei
-            replacement_fee_bump_bps: 1000,                   // 10%
+            replacement_fee_bump_bps: 1000,            // 10%
         }
     }
 
@@ -123,7 +123,7 @@ impl ChainSpec {
             nonce_gap_limit: 20,
             min_max_priority_fee_per_gas: 0,
             max_max_priority_fee_per_gas: 50_000_000_000_000,
-            replacement_fee_bump_bps: 1000
+            replacement_fee_bump_bps: 1000,
         }
     }
 }

@@ -9,7 +9,6 @@ pub struct GasFees {
     pub max_priority_fee_per_gas: u128,
 }
 
-
 impl GasFees {
     pub fn new(max_fee_per_gas: u128, max_priority_fee_per_gas: u128) -> Self {
         Self {

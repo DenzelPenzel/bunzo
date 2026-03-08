@@ -1,6 +1,6 @@
 pub mod v0_7;
 
-use alloy_primitives::{Address, Bytes, B256, U256};
+use alloy_primitives::{Address, B256, Bytes, U256};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
@@ -37,7 +37,7 @@ impl UserOperationId {
         Self { sender, nonce }
     }
 
-     /// Extract the nonce key (upper 192 bits) from the 2D nonce
+    /// Extract the nonce key (upper 192 bits) from the 2D nonce
     pub fn nonce_key(&self) -> U256 {
         self.nonce >> 64
     }
@@ -61,12 +61,12 @@ pub trait UserOperation: Send + Sync + Clone + fmt::Debug {
     /// The account that originates the operation
     fn sender(&self) -> Address;
 
-     /// The operation nonce
+    /// The operation nonce
     fn nonce(&self) -> U256;
 
     /// The call data to execute on the sender account
     fn call_data(&self) -> &Bytes;
-    
+
     /// The operation signature
     fn signature(&self) -> &Bytes;
 
@@ -86,7 +86,6 @@ pub trait UserOperation: Send + Sync + Clone + fmt::Debug {
     fn pre_verification_gas(&self) -> u128;
     fn max_fee_per_gas(&self) -> u128;
     fn max_priority_fee_per_gas(&self) -> u128;
-
 
     /// Paymaster verification gas limit (0 if no paymaster)
     fn paymaster_verification_gas_limit(&self) -> u128;
@@ -146,7 +145,6 @@ pub trait UserOperation: Send + Sync + Clone + fmt::Debug {
     /// Compute the calldata gas cost for this operation
     fn calldata_gas_cost(&self, zero_byte_cost: u64, non_zero_byte_cost: u64) -> u128;
 }
-
 
 /// Variant enum wrapping all supported user operation versions
 #[derive(Debug, Clone)]
