@@ -1,0 +1,30 @@
+[package]
+name = "bunzo"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "bunzo"
+path = "src/main.rs"
+
+[dependencies]
+bunzo-types.workspace = true
+bunzo-provider.workspace = true
+bunzo-pool.workspace = true
+bunzo-builder.workspace = true
+bunzo-rpc.workspace = true
+bunzo-signer.workspace = true
+
+alloy-primitives.workspace = true
+alloy-provider.workspace = true
+alloy-transport-http.workspace = true
+alloy-network.workspace = true
+alloy-signer-local.workspace = true
+
+clap.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+anyhow.workspace = true

@@ -1,0 +1,83 @@
+[workspace]
+members = [
+    "bin/bunzo",
+    "crates/pool",
+    "crates/provider",
+    "crates/rpc",
+    "crates/builder",
+    "crates/types",
+    "crates/signer",
+]
+default-members = ["bin/bunzo"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+
+[workspace.dependencies]
+bunzo-types = { path = "crates/types" }
+bunzo-provider = { path = "crates/provider" }
+bunzo-pool = { path = "crates/pool" }
+bunzo-builder = { path = "crates/builder" }
+bunzo-rpc = { path = "crates/rpc" }
+bunzo-signer = { path = "crates/signer" }
+
+# alloy core
+alloy-primitives = { version = "1.5.7", features = ["serde"] }
+alloy-sol-macro = "1.5.7"
+alloy-sol-types = "1.5.2"
+
+# alloy
+alloy-consensus = "1.7.3"
+alloy-contract = "1.7.3"
+alloy-eips = { version = "1.7.3", features = ["k256", "serde", "std"] }
+alloy-json-rpc = "1.7.3"
+alloy-network = "1.7.3"
+alloy-provider = { version = "1.7.3", default-features = false, features = ["reqwest", "reqwest-rustls-tls"] }
+alloy-rpc-client = "1.7.3"
+alloy-rpc-types-eth = "1.7.3"
+alloy-rpc-types-trace = "1.7.3"
+alloy-serde = "1.7.3"
+alloy-signer = "1.7.3"
+alloy-signer-local = "1.7.3"
+alloy-transport = "1.7.3"
+alloy-transport-http = { version = "1.7.3", default-features = false, features = ["reqwest", "reqwest-rustls-tls"] }
+
+# async / runtime
+tokio = { version = "1.44.2", default-features = false, features = ["rt-multi-thread", "sync", "time", "macros", "signal"] }
+async-trait = "0.1.83"
+futures = "0.3.30"
+futures-util = "0.3.30"
+
+# rpc
+jsonrpsee = { version = "0.24.9", features = ["server", "macros"] }
+tower = { version = "0.4.13", features = ["timeout"] }
+tower-http = { version = "0.6.2", features = ["cors"] }
+http = "1.1.0"
+
+# error handling
+thiserror = "1.0.64"
+anyhow = "1.0.89"
+
+# observability
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+metrics = "0.24.1"
+metrics-derive = "0.1.0"
+
+# serialization
+serde = { version = "1.0.210", features = ["derive"] }
+serde_json = "1.0.128"
+
+# cli
+clap = { version = "4", features = ["derive", "env"] }
+
+# misc
+parking_lot = "0.12.3"
+reqwest = { version = "0.12.8", default-features = false, features = ["rustls-tls", "json"] }
+rand = "0.8.5"
+const-hex = "1.12.0"
+auto_impl = "1.2.0"

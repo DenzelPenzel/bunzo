@@ -1,0 +1,28 @@
+[package]
+name = "bunzo-builder"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+bunzo-types.workspace = true
+bunzo-provider.workspace = true
+bunzo-pool.workspace = true
+bunzo-signer.workspace = true
+
+alloy-primitives.workspace = true
+alloy-consensus.workspace = true
+alloy-network.workspace = true
+alloy-signer.workspace = true
+alloy-sol-types.workspace = true
+
+async-trait.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+metrics.workspace = true
+futures-util.workspace = true
+const-hex.workspace = true
+alloy-rpc-types-eth.workspace = true

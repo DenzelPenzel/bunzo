@@ -1,0 +1,16 @@
+[package]
+name = "bunzo-types"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+alloy-primitives.workspace = true
+alloy-sol-macro.workspace = true
+alloy-sol-types.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+const-hex.workspace = true
+tokio.workspace = true
