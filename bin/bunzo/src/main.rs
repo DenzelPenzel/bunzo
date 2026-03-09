@@ -6,11 +6,11 @@ use alloy_provider::ProviderBuilder;
 use clap::Parser;
 use tracing::{info, warn};
 
-use bunzo_builder::{BundleProposerImpl, BundlerTask};
 use bunzo_builder::strategy::DirectSubmissionStrategy;
+use bunzo_builder::{BundleProposerImpl, BundlerTask};
 use bunzo_pool::{OperationPool, PoolConfig, ReputationManager, Validator};
-use bunzo_provider::{AlloyBundleHandler, AlloyEntryPointProvider, AlloyEvmProvider, EvmProvider};
 use bunzo_provider::gas_oracle::ProviderGasOracle;
+use bunzo_provider::{AlloyBundleHandler, AlloyEntryPointProvider, AlloyEvmProvider, EvmProvider};
 use bunzo_rpc::{RpcServer, RpcServerConfig};
 use bunzo_signer::LocalSigner;
 use bunzo_types::chain::ChainSpec;
@@ -67,8 +67,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let evm_provider = Arc::new(AlloyEvmProvider::new(alloy_provider.clone()));
 
     let chain_id = if cli.chain_id == 0 {
-        let detected = evm_provider.get_chain_id().await?;
-        detected
+        evm_provider.get_chain_id().await?
     } else {
         cli.chain_id
     };
@@ -90,7 +89,11 @@ async fn main() -> Result<(), anyhow::Error> {
     let pool_config = PoolConfig::from(&chain_spec);
     let pool = Arc::new(OperationPool::new(pool_config));
     let reputation = ReputationManager::default();
-    let validator = Arc::new(Validator::with_pool(chain_spec.clone(), reputation, pool.clone()));
+    let validator = Arc::new(Validator::with_pool(
+        chain_spec.clone(),
+        reputation,
+        pool.clone(),
+    ));
 
     let (shutdown_tx, shutdown_rx) = tokio::sync::watch::channel(());
 
@@ -135,7 +138,10 @@ async fn main() -> Result<(), anyhow::Error> {
     }
 
     let rpc_ep_provider = ProviderBuilder::new().connect_http(cli.node_url.parse()?);
-    let entry_point_provider = Arc::new(AlloyEntryPointProvider::new(rpc_ep_provider, cli.entry_point));
+    let entry_point_provider = Arc::new(AlloyEntryPointProvider::new(
+        rpc_ep_provider,
+        cli.entry_point,
+    ));
 
     let rpc_config = RpcServerConfig {
         addr: cli.rpc_addr,
@@ -154,7 +160,6 @@ async fn main() -> Result<(), anyhow::Error> {
     let (addr, handle) = rpc_server.start().await?;
 
     info!(addr = %addr, "bunzo is ready");
-
 
     tokio::signal::ctrl_c().await?;
     info!("shutting down");

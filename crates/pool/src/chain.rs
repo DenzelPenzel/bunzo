@@ -16,6 +16,7 @@ use crate::pool::OperationPool;
 use crate::reputation::ReputationManager;
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct BlockEntry {
     number: u64,
     hash: B256,
@@ -72,7 +73,7 @@ impl<P: EvmProvider> ChainWatcher<P> {
         }
 
         let mut interval = tokio::time::interval(self.poll_interval);
-        interval.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
+        interval.set_missed_tick_behavior(MissedTickBehavior::Skip);
 
         loop {
             tokio::select! {

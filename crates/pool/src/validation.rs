@@ -38,15 +38,13 @@ impl Validator {
     }
 
     pub fn validate_sync(&self, uo: &UserOperation, base_fee: u128) -> Result<(), ValidationError> {
-        let result = (|| {
+        (|| {
             self.validate_static_fields(uo)?;
             self.validate_gas_price(uo, base_fee)?;
             self.validate_nonce(uo)?;
             self.validate_reputation(uo)?;
             Ok(())
-        })();
-        
-        result
+        })()
     }
 
     fn validate_static_fields(&self, uo: &UserOperation) -> Result<(), ValidationError> {

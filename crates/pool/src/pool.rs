@@ -212,7 +212,7 @@ impl OperationPool {
         self.by_id.read().get(id).cloned()
     }
 
-    pub fn remove_by_hash(&self, hash: &B256) -> Option<Arc<PoolEntry>>{
+    pub fn remove_by_hash(&self, hash: &B256) -> Option<Arc<PoolEntry>> {
         let entry = self.by_hash.read().get(hash).cloned()?;
         self.remove_inner(&entry);
         Some(entry)

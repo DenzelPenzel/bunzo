@@ -70,10 +70,10 @@ impl ConflictDetector {
                     }
                 }
                 AccessType::Read => {
-                    if let Some(&writer_idx) = self.written.get(&key) {
-                        if self.senders[writer_idx] != sender {
-                            conflicts.insert(writer_idx);
-                        }
+                    if let Some(&writer_idx) = self.written.get(&key)
+                        && self.senders[writer_idx] != sender
+                    {
+                        conflicts.insert(writer_idx);
                     }
                 }
             }
