@@ -128,23 +128,23 @@ impl<P: EvmProvider> ChainWatcher<P> {
 
         self.base_fee.store(base_fee as u64, Ordering::Relaxed);
 
-        if let Some(last_entry) = self.block_history.back() {
-            if block.header.parent_hash != last_entry.hash && block_number == last_entry.number + 1
-            {
-                let reorg_depth = self.detect_reorg_depth(&block.header.parent_hash);
-                if reorg_depth > 0 {
-                    warn!(
-                        depth = reorg_depth,
-                        block = block_number,
-                        "chain reorg detected"
-                    );
+        if let Some(last_entry) = self.block_history.back()
+            && block.header.parent_hash != last_entry.hash
+            && block_number == last_entry.number + 1
+        {
+            let reorg_depth = self.detect_reorg_depth(&block.header.parent_hash);
+            if reorg_depth > 0 {
+                warn!(
+                    depth = reorg_depth,
+                    block = block_number,
+                    "chain reorg detected"
+                );
 
-                    self.handle_reorg(reorg_depth);
-                    self.event_bus.publish(ChainEvent::Reorg {
-                        depth: reorg_depth,
-                        new_head: block_number,
-                    });
-                }
+                self.handle_reorg(reorg_depth);
+                self.event_bus.publish(ChainEvent::Reorg {
+                    depth: reorg_depth,
+                    new_head: block_number,
+                });
             }
         }
 
